@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    /* Your CSS styles here */
+    /* Add any additional styling you need */
+    body {
+        background-color: #ffffff; /* Change to your desired background color */
+    }
+
+    .center-wrapper {
+        display: flex;
+        align-items: center;
+        height: calc(100vh - 20px); /* Adjust as needed */
+        flex-direction: column;
+        margin-top: -1px; /* Adjust as needed */
+    }
+
+    .center-wrapper > div {
+        margin-bottom: 100px;
+    }
+    h2 {
+        margin-bottom: 30px;
+    }
+
+    /* Add margin to the "Choose Image" label */
+    .upload-label {
+        margin-bottom: 20px;
+    }
+
+    /* Add margin to the image preview */
+    .img-preview {
+        margin-bottom: 40px;
+    }
+</style>
+
+<div class="center-wrapper">
+    <div>
+        <h2>Image Classifier</h2>
+
+        <form id="upload-file" method="post" enctype="multipart/form-data">
+            <label for="imageUpload" class="upload-label">Choose Image</label>
+            <input type="file" name="file" id="imageUpload" accept=".png, .jpg, .jpeg">
+        </form>
+
+        <div class="image-section" style="display:none;">
+            <div class="img-preview">
+                <img id="previewImage" src="#" alt="Image Preview" style="max-width: 100%; max-height: 300px;">
+            </div>
+            <div>
+                <button type="button" class="btn btn-primary btn-lg" id="btn-predict">Predict!</button>
+            </div>
+        </div>
+
+        <div class="loader" style="display:none;"></div>
+
+        <h3 id="result">
+            <span> </span>
+        </h3>
+    </div>
+</div>
+
+<script>
+    // Image preview
+    $("#imageUpload").change(function() {
+        readURL(this);
+    });
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $('#previewImage').attr('src', e.target.result);
+                $('.image-section').show();
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
+{% endblock %}
